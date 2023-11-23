@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from task_manager.forms import WorkerPositionUpdateForm
 from task_manager.models import TaskType, Position, Task, Worker
 
 
@@ -31,12 +32,16 @@ class TaskTypeCreateView(generic.CreateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-type-list")
+    template_name = "task_manager/task_type_form.html"
+    context_object_name = "task_type_list"
 
 
 class TaskTypeUpdateView(generic.UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task_manager:task-type-list")
+    template_name = "task_manager/task_type_form.html"
+    context_object_name = "task_type_form"
 
 
 class TaskTypeDeleteView(generic.DeleteView):
@@ -107,7 +112,7 @@ class WorkerDetailView(generic.DetailView):
 
 class WorkerPositionUpdateView(generic.UpdateView):
     model = Worker
-    # form_class = WorkerPositionUpdateForm
+    form_class = WorkerPositionUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
 
 
