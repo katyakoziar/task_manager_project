@@ -18,7 +18,13 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True, blank=True)
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="workers"
+    )
 
     class Meta:
         verbose_name = "workers"
@@ -43,7 +49,7 @@ class Task(models.Model):
     priority = models.CharField(
         max_length=127, choices=PRIORITY_CHOICES, default="Medium"
     )
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
+    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
     assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks")
 
     def __str__(self) -> str:
