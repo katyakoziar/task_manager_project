@@ -1,6 +1,10 @@
+
+
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 
 class TaskType(models.Model):
@@ -51,6 +55,10 @@ class Task(models.Model):
     )
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
     assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks")
+
+    def clean(self):
+        if self.deadline and self.deadline < timezone.now().date():
+            raise ValidationError("The deadline cannot be earlier than today.")
 
     def __str__(self) -> str:
         return f"{self.name}, {self.deadline}"
