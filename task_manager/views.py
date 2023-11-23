@@ -50,6 +50,27 @@ class TaskListView(generic.ListView):
     paginate_by = 5
 
 
+class TaskDetailView(generic.DetailView):
+    model = Task
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("task_manager:task-list")
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("task_manager:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("task_manager:task-list")
+
+
 class PositionListView(generic.ListView):
     model = Position
     queryset = Position.objects.order_by("name")
