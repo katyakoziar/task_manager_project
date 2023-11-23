@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task.name }}
+    <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="btn btn-danger link-to-page" style="float: right">
+      Delete
+    </a>
+
+    <a href="{% url 'task_manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page" style="float: right">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <hr>
+  <p><strong>Task Type:</strong> ({{ task.task_type.name }})</p>
+
+  <hr>
+  <ul>
+    <h4>Assignees:</h4>
+    {% for assignee in task.assignees.all %}
+      <li>{{ assignee.username }} ({{ assignee.first_name }} {{ assignee.last_name }} {{ assignee.position }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -102,16 +102,15 @@ class WorkerListView(generic.ListView):
 
 class WorkerDetailView(generic.DetailView):
     model = Worker
-    queryset = Worker.objects.prefetch_related("task__name")
+    queryset = Worker.objects.prefetch_related("tasks")
 
 
 class WorkerPositionUpdateView(generic.UpdateView):
     model = Worker
-    form_class = WorkerPositionUpdateForm
+    # form_class = WorkerPositionUpdateForm
     success_url = reverse_lazy("task_manager:worker-list")
 
 
 class WorkerDeleteView(generic.DeleteView):
     model = Worker
     success_url = reverse_lazy("")
-
