@@ -39,7 +39,16 @@
               {{ task.deadline }}
           </td>
           <td>
-              {{ task.is_completed }}
+            {% if task.is_completed %}
+              <button type="submit" class="btn btn-success">
+                Yes
+              </button>
+            {% else %}
+              <button type="submit" class="btn btn-secondary">
+                No
+              </button>
+            {% endif %}
+
           </td>
           <td>
               {{ task.priority }}
