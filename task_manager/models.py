@@ -30,12 +30,12 @@ class Worker(AbstractUser):
 
 
 class Task(models.Model):
-    PRIORITY_CHOICES = [
+    PRIORITY_CHOICES =(
         ("Low", "Low"),
         ("Medium", "Medium"),
         ("High", "High"),
         ("Urgent", "Urgent"),
-    ]
+    )
     name = models.CharField(max_length=255)
     description = models.TextField()
     deadline = models.DateField()
