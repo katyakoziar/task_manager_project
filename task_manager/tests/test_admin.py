@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from task_manager.models import Worker, Task, TaskType, Position
+from task_manager.models import Worker, Position
 
 
 class AdminSiteTest(TestCase):

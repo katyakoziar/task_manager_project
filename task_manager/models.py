@@ -38,7 +38,7 @@ class Worker(AbstractUser):
 
 
 class Task(models.Model):
-    PRIORITY_CHOICES =(
+    PRIORITY_CHOICES = (
         ("Low", "Low"),
         ("Medium", "Medium"),
         ("High", "High"),
@@ -51,8 +51,15 @@ class Task(models.Model):
     priority = models.CharField(
         max_length=127, choices=PRIORITY_CHOICES, default="Medium"
     )
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
-    assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks")
+    task_type = models.ForeignKey(
+        TaskType,
+        on_delete=models.CASCADE,
+        related_name="tasks"
+    )
+    assignees = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="tasks"
+    )
 
     def clean(self):
         if self.deadline and self.deadline < timezone.now().date():

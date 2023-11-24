@@ -34,15 +34,24 @@ class TaskManagerViewsTest(TestCase):
 
     def test_task_type_update_view(self):
         task_type = TaskType.objects.create(name="Type 1")
-        response = self.client.get(reverse("task_manager:task-type-update", args=[task_type.pk]))
+        response = self.client.get(reverse(
+            "task_manager:task-type-update",
+            args=[task_type.pk]
+        ))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "task_manager/task_type_form.html")
 
     def test_task_type_delete_view(self):
         task_type = TaskType.objects.create(name="Type 1")
-        response = self.client.get(reverse("task_manager:task-type-delete", args=[task_type.pk]))
+        response = self.client.get(reverse(
+            "task_manager:task-type-delete",
+            args=[task_type.pk]
+        ))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "task_manager/task_type_confirm_delete.html")
+        self.assertTemplateUsed(
+            response,
+            "task_manager/task_type_confirm_delete.html"
+        )
 
     def test_task_list_view(self):
         task_type = TaskType.objects.create(name="Some Task Type")
@@ -66,8 +75,14 @@ class TaskManagerViewsTest(TestCase):
 
     def test_worker_list_view(self):
         Position.objects.create(name="Position 1")
-        Worker.objects.create(username="worker1", position=Position.objects.first())
-        Worker.objects.create(username="worker2", position=Position.objects.first())
+        Worker.objects.create(
+            username="worker1",
+            position=Position.objects.first()
+        )
+        Worker.objects.create(
+            username="worker2",
+            position=Position.objects.first()
+        )
         response = self.client.get(reverse("task_manager:worker-list"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "task_manager/worker_list.html")
