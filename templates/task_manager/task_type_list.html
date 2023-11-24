@@ -2,24 +2,34 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <h1>
-    Task Types List
-    <a href="{% url 'task_manager:task-type-create' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
-  <form action="" method="get" class="form-inline">
-      {{ search_form|crispy }}
-    <input class="btn btn-secondary" type="submit" value="Search">
-  </form>
+  <div class="row">
+    <div class="col-6">
+      <h1>
+        Task Types List
+      </h1>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-end">
+      <form action="" method="get" class="form-inline search-form">
+        {{ search_form|crispy }}
+        <input class="btn btn-secondary" type="submit" value="Search">
+      </form>
+      <a href="{% url 'task_manager:task-type-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </div>
+  </div>
+
+
   {% if task_type_list %}
     <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
 
       {% for task_type in task_type_list %}
         <tr>
