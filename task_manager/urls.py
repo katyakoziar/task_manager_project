@@ -18,7 +18,8 @@ from task_manager.views import (
     TaskDeleteView,
     WorkerDetailView,
     WorkerPositionUpdateView,
-    WorkerDeleteView
+    WorkerDeleteView,
+    TaskToggleStatusView
 )
 
 urlpatterns = [
@@ -87,6 +88,7 @@ urlpatterns = [
         WorkerDeleteView.as_view(),
         name="worker-delete"
     ),
+    path("toggle-status/<int:pk>/", TaskToggleStatusView.as_view(), name="task-toggle-status")
 ]
 
 app_name = "task_manager"
