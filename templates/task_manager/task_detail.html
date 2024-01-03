@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task.name }}
+    <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="btn btn-danger link-to-page" style="float: right">
+      Delete
+    </a>
+
+    <a href="{% url 'task_manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page"
+       style="float: right">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <div class="row">
+    <div class="col-4 d-flex align-items-center">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Description:</strong></h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ task.description }}</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 d-flex align-items-center">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Task Type:</strong></h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ task.task_type.name }}</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 d-flex align-items-center">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><strong>Assignees:</strong></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            {% for assignee in task.assignees.all %}
+              <li><strong>{{ assignee.username }}</strong>
+                ({{ assignee.first_name }} {{ assignee.last_name }} {{ assignee.position }})
+              </li>
+            {% endfor %}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Username: {{ worker.username }}
+    <a href="{% url 'task_manager:worker-delete' pk=worker.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'task_manager:worker-update' pk=worker.id %}" class="btn btn-secondary link-to-page">
+      Update position
+    </a>
+  </h1>
+  <div class="row">
+    <div class="col-12 d-flex align-items-center">
+      <div class="card w-100">
+        <div class="card-body">
+          <p><strong>First name:</strong> {{ worker.first_name }}</p>
+          <p><strong>Last name:</strong> {{ worker.last_name }}</p>
+          <p><strong>Position:</strong> {{ worker.position }}</p>
+          <p><strong>Is staff:</strong> {{ worker.is_staff }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+    <h4>Tasks</h4>
+    <div class="row">
+
+      {% for task in worker.tasks.all %}
+        <div class="col-3 d-flex align-items-center">
+          <div class="card w-100">
+            <div class="card-body">
+              <p><strong>Task:</strong> {{ task.name }}</p>
+              <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            </div>
+          </div>
+        </div>
+
+
+      {% empty %}
+        <p>No tasks!</p>
+      {% endfor %}
+
+    </div>
+{% endblock %}
