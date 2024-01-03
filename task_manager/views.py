@@ -18,7 +18,6 @@ from task_manager.models import TaskType, Position, Task, Worker
 
 @login_required
 def index(request):
-    """View function for the home page of the site."""
 
     context = {
         "num_task_types": TaskType.objects.count(),
