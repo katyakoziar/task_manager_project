@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-6">
+      <h1>Worker List</h1>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-end">
+      <form action="" method="get" class="form-inline search-form" >
+        {{ search_form|crispy }}
+        <input class="btn btn-secondary" type="submit" value="Search">
+      </form>
+    </div>
+  </div>
+
+
+    {% if worker_list %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+    {% for worker in worker_list %}
+      <tr>
+        <td>{{ worker.id }}</td>
+        <td><a href="{% url 'task_manager:worker-detail' pk=worker.id %}">{{ worker.username }}</a></td>
+        <td>{{ worker.first_name }}</td>
+        <td>{{ worker.last_name }}</td>
+        <td>{{ worker.email }}</td>
+        <td>{{ worker.position.name }}</td>
+      </tr>
+    {% endfor %}
+
+    </table>
+    {% else %}
+      <p>There are no workers in the manager.</p>
+    {% endif %}
+{% endblock %}

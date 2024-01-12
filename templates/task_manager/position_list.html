@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-6">
+      <h1>
+        Positions List
+      </h1>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-end">
+      <form action="" method="get" class="form-inline search-form">
+        {{ search_form|crispy }}
+        <input class="btn btn-secondary" type="submit" value="Search">
+      </form>
+      <a href="{% url 'task_manager:position-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </div>
+  </div>
+
+  {% if position_list %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      {% for position in position_list %}
+        <tr>
+          <td>
+              {{ position.id }}
+          </td>
+          <td>
+              {{ position.name }}
+          </td>
+           <td>
+              <a href="{% url 'task_manager:position-update' pk=position.id %}">
+                Update
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                href="{% url 'task_manager:position-delete' pk=position.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+      <p>There are no position in the manager.</p>
+  {% endif %}
+{% endblock %}

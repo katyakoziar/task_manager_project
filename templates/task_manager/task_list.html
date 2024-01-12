@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-6">
+      <h1>
+        Tasks List
+      </h1>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-end">
+      <form action="" method="get" class="form-inline search-form">
+        {{ search_form|crispy }}
+        <input class="btn btn-secondary" type="submit" value="Search">
+      </form>
+      <a href="{% url 'task_manager:task-create' %}" class="btn btn-primary link-to-page">
+        Create
+      </a>
+    </div>
+  </div>
+
+
+  {% if task_list %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Deadline</th>
+          <th>Completed</th>
+          <th>Priority</th>
+          <th>Task type</th>
+        </tr>
+      </thead>
+
+      {% for task in task_list %}
+        <tr>
+          <td>
+              {{ task.id }}
+          </td>
+          <td>
+              <a href="{% url 'task_manager:task-detail' pk=task.id %}">{{ task.name }}</a>
+          </td>
+          <td>
+              {{ task.description }}
+          </td>
+          <td>
+              {{ task.deadline }}
+          </td>
+          <td>
+            {% if task.is_completed %}
+              <form method="post" action="{% url 'task_manager:task-toggle-status' pk=task.pk %}">
+                {% csrf_token %}
+                <input type="submit" value="Undo" class="btn btn-secondary">
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'task_manager:task-toggle-status' pk=task.pk %}">
+                {% csrf_token %}
+                <input type="submit" value="Complete" class="btn btn-success">
+              </form>
+            {% endif %}
+
+          </td>
+          <td>
+              {{ task.priority }}
+          </td>
+          <td>
+              {{ task.task_type.name }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+      <p>There are no task in the manager.</p>
+  {% endif %}
+{% endblock %}
